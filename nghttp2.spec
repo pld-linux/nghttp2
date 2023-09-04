@@ -10,13 +10,13 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.55.1
+Version:	1.56.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	5af6a7ee55dc96661aa8649636b68763
+# Source0-md5:	170885d5d16088bc2abd45f218c2b7e9
 URL:		https://nghttp2.org/
 %{?with_tests:BuildRequires:	CUnit >= 2.1}
 BuildRequires:	autoconf >= 2.61
@@ -30,9 +30,9 @@ BuildRequires:	libevent-devel >= 2.0.8
 BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-devel >= 1:2.6.26
-%{?with_http3:BuildRequires:	nghttp3-devel >= 0.7.0}
+%{?with_http3:BuildRequires:	nghttp3-devel >= 0.15.0}
 # +ngtcp2-crypto-openssl or ngtcp2-crypto-boringssl
-%{?with_http3:BuildRequires:	ngtcp2-devel >= 0.9.0}
+%{?with_http3:BuildRequires:	ngtcp2-devel >= 0.19.0}
 BuildRequires:	openssl-devel >= 1.0.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
 BuildRequires:	pkgconfig >= 1:0.20
