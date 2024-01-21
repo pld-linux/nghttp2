@@ -10,13 +10,13 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.58.0
+Version:	1.59.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	4601542da69d9657072a3c5529f5c32e
+# Source0-md5:	97c1931900eee69ac6dd1e1c09f22e30
 URL:		https://nghttp2.org/
 %{?with_tests:BuildRequires:	CUnit >= 2.1}
 BuildRequires:	autoconf >= 2.61
@@ -30,10 +30,10 @@ BuildRequires:	libevent-devel >= 2.0.8
 BuildRequires:	libstdc++-devel >= 6:5
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-devel >= 1:2.6.26
-%{?with_http3:BuildRequires:	nghttp3-devel >= 1.0.0}
+%{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
 # +ngtcp2-crypto-openssl or ngtcp2-crypto-boringssl
 %{?with_http3:BuildRequires:	ngtcp2-devel >= 1.0.0}
-BuildRequires:	openssl-devel >= 1.0.1
+BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
 BuildRequires:	pkgconfig >= 1:0.20
 BuildRequires:	python3 >= 1:3.8
@@ -49,7 +49,7 @@ Requires:	jansson >= 2.5
 # noinst examples only
 #Requires:	libevent >= 2.0.8
 Requires:	libxml2 >= 1:2.6.26
-Requires:	openssl >= 1.0.1
+Requires:	openssl >= 1.1.1
 Requires:	zlib >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
