@@ -102,7 +102,7 @@ Statyczna biblioteka libnghttp2.
 %prep
 %setup -q
 
-%{__sed} -i -e '1s,/usr/bin/env python,%{__python3},' script/fetch-ocsp-response
+%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' script/fetch-ocsp-response
 
 %build
 %{__libtoolize}
