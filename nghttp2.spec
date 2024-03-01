@@ -10,15 +10,14 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.59.0
+Version:	1.60.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	97c1931900eee69ac6dd1e1c09f22e30
+# Source0-md5:	2b09aaea09a783b2f31e3e5adaeaecbd
 URL:		https://nghttp2.org/
-%{?with_tests:BuildRequires:	CUnit >= 2.1}
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	c-ares-devel >= 1.7.5
