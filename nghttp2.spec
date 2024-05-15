@@ -10,23 +10,23 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.61.0
+Version:	1.62.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	0bb5661ff08b983487d6683350770c36
+# Source0-md5:	2338109299e1d83a1191509baa6daacb
 URL:		https://nghttp2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
-BuildRequires:	c-ares-devel >= 1.7.5
+BuildRequires:	c-ares-devel >= 1.16.0
 BuildRequires:	jansson-devel >= 2.5
 %{?with_libbpf:BuildRequires:	libbpf-devel >= 0.7.0}
 BuildRequires:	libev-devel
 # for examples
 BuildRequires:	libevent-devel >= 2.0.8
-BuildRequires:	libstdc++-devel >= 6:5
+BuildRequires:	libstdc++-devel >= 6:10
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-devel >= 1:2.6.26
 %{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
@@ -43,7 +43,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	c-ares >= 1.7.5
+Requires:	c-ares >= 1.16.0
 Requires:	jansson >= 2.5
 # noinst examples only
 #Requires:	libevent >= 2.0.8
