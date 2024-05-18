@@ -1,10 +1,11 @@
-# TODO: mruby, neverbleed?
+# TODO: mruby, neverbleed for nghttpx?
 #
 # Conditional build:
-%bcond_with	http3		# experimental HTTP/3 support
-%bcond_with	libbpf		# BPF support (requires CC=clang)
+%bcond_with	brotli		# brotli support in apps
+%bcond_with	http3		# HTTP/3 support in apps (h2load, nghttpx)
+%bcond_with	libbpf		# BPF support in nghttpx (requires CC=clang)
 %bcond_without	static_libs	# static libraries
-%bcond_without	systemd		# don't include systemd support
+%bcond_without	systemd		# systemd support in nghttpx
 %bcond_without	tests		# "make check" call
 
 Summary:	HTTP/2.0 C library
@@ -23,15 +24,16 @@ BuildRequires:	automake
 BuildRequires:	c-ares-devel >= 1.16.0
 BuildRequires:	jansson-devel >= 2.5
 %{?with_libbpf:BuildRequires:	libbpf-devel >= 0.7.0}
+%{?with_brotli:BuildRequires:	libbrotli-devel >= 1.0.9}
 BuildRequires:	libev-devel
-# for examples
+# libevent + libevent_openssl for examples
 BuildRequires:	libevent-devel >= 2.0.8
 BuildRequires:	libstdc++-devel >= 6:10
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libxml2-devel >= 1:2.6.26
 %{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
-# +ngtcp2-crypto-openssl or ngtcp2-crypto-boringssl
 %{?with_http3:BuildRequires:	ngtcp2-devel >= 1.4.0}
+#%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.0.0  or  ngtcp2-crypto-boringssl}
 BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
 BuildRequires:	pkgconfig >= 1:0.20
@@ -45,6 +47,7 @@ BuildRequires:	zlib-devel >= 1.2.3
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	c-ares >= 1.16.0
 Requires:	jansson >= 2.5
+%{?with_brotli:Requires:	libbrotli >= 1.0.9}
 # noinst examples only
 #Requires:	libevent >= 2.0.8
 Requires:	libxml2 >= 1:2.6.26
@@ -117,7 +120,11 @@ Statyczna biblioteka libnghttp2.
 	--disable-silent-rules \
 	%{!?with_static_libs:--disable-static} \
 	--without-jemalloc \
-	%{?with_libbpf:--with-libbpf}
+	%{?with_libbpf:--with-libbpf} \
+%if %{with brotli}
+	--with-libbrotlidec \
+	--with-libbrotlienc
+%endif
 
 %{__make}
 
