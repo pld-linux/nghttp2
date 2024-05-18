@@ -1,6 +1,7 @@
 # TODO: mruby, neverbleed for nghttpx?
 #
 # Conditional build:
+%bcond_without	tools		# applications (nghttp, nghttpd, nghttpx, h2load) and hpack-tools (deflatehd, inflatehd)
 %bcond_with	brotli		# brotli support in apps
 %bcond_with	http3		# HTTP/3 support in apps (h2load, nghttpx)
 %bcond_with	libbpf		# BPF support in nghttpx (requires CC=clang)
@@ -21,6 +22,14 @@ Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name
 URL:		https://nghttp2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
+BuildRequires:	libtool >= 2:2.2.6
+BuildRequires:	pkgconfig >= 1:0.20
+BuildRequires:	python3 >= 1:3.8
+BuildRequires:	rpmbuild(macros) >= 1.734
+BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
+%if %{with tools}
 BuildRequires:	c-ares-devel >= 1.16.0
 BuildRequires:	jansson-devel >= 2.5
 %{?with_libbpf:BuildRequires:	libbpf-devel >= 0.7.0}
@@ -28,22 +37,16 @@ BuildRequires:	jansson-devel >= 2.5
 BuildRequires:	libev-devel
 # libevent + libevent_openssl for examples
 BuildRequires:	libevent-devel >= 2.0.8
-BuildRequires:	libstdc++-devel >= 6:10
-BuildRequires:	libtool >= 2:2.2.6
+BuildRequires:	libstdc++-devel >= 6:11
 BuildRequires:	libxml2-devel >= 1:2.6.26
 %{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
 %{?with_http3:BuildRequires:	ngtcp2-devel >= 1.4.0}
 #%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.0.0  or  ngtcp2-crypto-boringssl}
 BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
-BuildRequires:	pkgconfig >= 1:0.20
-BuildRequires:	python3 >= 1:3.8
-BuildRequires:	rpmbuild(macros) >= 1.734
-BuildRequires:	sed >= 4.0
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
-BuildRequires:	tar >= 1:1.22
-BuildRequires:	xz
 BuildRequires:	zlib-devel >= 1.2.3
+%endif
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	c-ares >= 1.16.0
 Requires:	jansson >= 2.5
@@ -114,8 +117,8 @@ Statyczna biblioteka libnghttp2.
 %{__autoheader}
 %{__automake}
 %configure \
-	--enable-app \
-	--enable-hpack-tools \
+	%{__enable_disable tools app} \
+	%{__enable_disable tools hpack-tools} \
 	%{?with_http3:--enable-http3} \
 	--disable-silent-rules \
 	%{!?with_static_libs:--disable-static} \
@@ -143,30 +146,37 @@ rm -rf $RPM_BUILD_ROOT
 # packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/nghttp2
 
+%if %{without tools}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{h2load,nghttp,nghttpd,nghttpx}.1
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/nghttp2
+%endif
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
+%if %{with tools}
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING ChangeLog README.rst
 %attr(755,root,root) %{_bindir}/deflatehd
 %attr(755,root,root) %{_bindir}/h2load
 %attr(755,root,root) %{_bindir}/inflatehd
 %attr(755,root,root) %{_bindir}/nghttp
 %attr(755,root,root) %{_bindir}/nghttpd
 %attr(755,root,root) %{_bindir}/nghttpx
-%dir %{_datadir}/nghttp2
-%attr(755,root,root) %{_datadir}/nghttp2/fetch-ocsp-response
 %{_mandir}/man1/h2load.1*
 %{_mandir}/man1/nghttp.1*
 %{_mandir}/man1/nghttpd.1*
 %{_mandir}/man1/nghttpx.1*
+%dir %{_datadir}/nghttp2
+%attr(755,root,root) %{_datadir}/nghttp2/fetch-ocsp-response
+%endif
 
 %files libs
 %defattr(644,root,root,755)
+%doc AUTHORS COPYING ChangeLog README.rst
 %attr(755,root,root) %{_libdir}/libnghttp2.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libnghttp2.so.14
 
