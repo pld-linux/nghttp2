@@ -37,7 +37,7 @@ BuildRequires:	jansson-devel >= 2.5
 BuildRequires:	libev-devel
 # libevent + libevent_openssl for examples
 BuildRequires:	libevent-devel >= 2.0.8
-BuildRequires:	libstdc++-devel >= 6:11
+BuildRequires:	libstdc++-devel >= 6:12
 BuildRequires:	libxml2-devel >= 1:2.6.26
 %{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
 %{?with_http3:BuildRequires:	ngtcp2-devel >= 1.4.0}
