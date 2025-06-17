@@ -12,13 +12,13 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.65.0
+Version:	1.66.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	c4c1b02658f2a7c8eb0ddf59bd5caee9
+# Source0-md5:	295c22437cc44e1634a2b82ea93df747
 URL:		https://nghttp2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -40,7 +40,7 @@ BuildRequires:	libevent-devel >= 2.0.8
 BuildRequires:	libstdc++-devel >= 6:12
 BuildRequires:	libxml2-devel >= 1:2.6.26
 %{?with_http3:BuildRequires:	nghttp3-devel >= 1.1.0}
-%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.4.0}
+%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.12.0}
 #%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.0.0  or  ngtcp2-crypto-boringssl}
 BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
@@ -108,8 +108,6 @@ Statyczna biblioteka libnghttp2.
 %prep
 %setup -q
 
-%{__sed} -i -e '1s,/usr/bin/env python3,%{__python3},' script/fetch-ocsp-response
-
 %build
 %{__libtoolize}
 %{__aclocal} -I m4
@@ -148,7 +146,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{without tools}
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{h2load,nghttp,nghttpd,nghttpx}.1
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/nghttp2
 %endif
 
 %clean
@@ -170,8 +167,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/nghttp.1*
 %{_mandir}/man1/nghttpd.1*
 %{_mandir}/man1/nghttpx.1*
-%dir %{_datadir}/nghttp2
-%attr(755,root,root) %{_datadir}/nghttp2/fetch-ocsp-response
 %endif
 
 %files libs
