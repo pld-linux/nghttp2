@@ -12,13 +12,14 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.67.1
+Version:	1.68.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	87083f18d6b44c38a4b21a887faa3e86
+# Source0-md5:	d5ba082629f15c67e72b4c26f7935500
+Patch0:		llhttp-neon.patch
 URL:		https://nghttp2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -39,9 +40,9 @@ BuildRequires:	libev-devel
 BuildRequires:	libevent-devel >= 2.0.8
 BuildRequires:	libstdc++-devel >= 6:12
 BuildRequires:	libxml2-devel >= 1:2.6.26
-%{?with_http3:BuildRequires:	nghttp3-devel >= 1.11.0}
-%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.15.0}
-#%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.15.0  or  ngtcp2-crypto-boringssl}
+%{?with_http3:BuildRequires:	nghttp3-devel >= 1.12.0}
+%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.16.0}
+#%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.16.0  or  ngtcp2-crypto-boringssl}
 BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
@@ -107,6 +108,7 @@ Statyczna biblioteka libnghttp2.
 
 %prep
 %setup -q
+%patch -P0 -p1
 
 %build
 %{__libtoolize}
