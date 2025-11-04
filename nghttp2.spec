@@ -48,15 +48,15 @@ BuildRequires:	openssl-devel >= 1.1.1
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 BuildRequires:	zlib-devel >= 1.2.3
 %endif
-Requires:	%{name}-libs = %{version}-%{release}
-Requires:	c-ares >= 1.16.0
-Requires:	jansson >= 2.5
-%{?with_brotli:Requires:	libbrotli >= 1.0.9}
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
+Requires:	c-ares%{?_isa} >= 1.16.0
+Requires:	jansson%{?_isa} >= 2.5
+%{?with_brotli:Requires:	libbrotli%{?_isa} >= 1.0.9}
 # noinst examples only
 #Requires:	libevent >= 2.0.8
-Requires:	libxml2 >= 1:2.6.26
-Requires:	openssl >= 1.1.1
-Requires:	zlib >= 1.2.3
+Requires:	libxml2%{?_isa} >= 1:2.6.26
+Requires:	openssl%{?_isa} >= 1.1.1
+Requires:	zlib%{?_isa} >= 1.2.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -86,7 +86,7 @@ libnghttp2 to napisana w C biblioteka implementująca protokół HTTP/2
 Summary:	Files needed for developing with libnghttp2
 Summary(pl.UTF-8):	Pliki niezbędne do tworzenia aplikacji z użyciem libnghttp2
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs%{?_isa} = %{version}-%{release}
 
 %description devel
 Files needed for building applications with libnghttp2.
@@ -98,7 +98,7 @@ Pliki niezbędne do tworzenia aplikacji z użyciem libnghttp2.
 Summary:	Static libnghttp2 library
 Summary(pl.UTF-8):	Statyczna biblioteka libnghttp2
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 Static libnghttp2 library.
