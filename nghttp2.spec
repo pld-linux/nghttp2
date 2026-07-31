@@ -12,13 +12,13 @@
 Summary:	HTTP/2.0 C library
 Summary(pl.UTF-8):	Biblioteka C HTTP/2.0
 Name:		nghttp2
-Version:	1.69.0
+Version:	1.70.0
 Release:	1
 License:	MIT
 Group:		Libraries
 #Source0Download: https://github.com/nghttp2/nghttp2/releases
 Source0:	https://github.com/nghttp2/nghttp2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	7015bee1f5a24012b848a98bfe4864b1
+# Source0-md5:	3df2b4b51caa13b76032bfd2d11d4ab2
 URL:		https://nghttp2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
@@ -37,11 +37,11 @@ BuildRequires:	jansson-devel >= 2.5
 BuildRequires:	libev-devel
 # libevent + libevent_openssl for examples
 BuildRequires:	libevent-devel >= 2.0.8
-BuildRequires:	libstdc++-devel >= 6:12
+BuildRequires:	libstdc++-devel >= 6:14
 BuildRequires:	libxml2-devel >= 1:2.6.26
-%{?with_http3:BuildRequires:	nghttp3-devel >= 1.12.0}
-%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.16.0}
-#%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.16.0  or  ngtcp2-crypto-boringssl}
+%{?with_http3:BuildRequires:	nghttp3-devel >= 1.17.0}
+%{?with_http3:BuildRequires:	ngtcp2-devel >= 1.23.0}
+#%{?with_http3:BuildRequires:	ngtcp2-crypto-quictls >= 1.23.0  or  ngtcp2-crypto-boringssl}
 BuildRequires:	openssl-devel >= 1.1.1
 %{?with_http3:BuildRequires:	openssl-devel(quic)}
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
